@@ -11,11 +11,11 @@ import matplotlib
 from streamlit_echarts import st_echarts
 
 matplotlib.use("Agg")
-st.set_page_config(page_title="Mortality Prediction", layout="wide", page_icon="🦈")
+st.set_page_config(page_title="Poisoning Prediction", layout="wide", page_icon="🦈")
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # =================== Sidebar ===================
-# model_choice = st.sidebar.radio("Please select a prediction model:", ["Model 1 (ROSC on-site)", "Model 2 (30-day survival)"])
+# model_choice = st.sidebar.radio("Please select a prediction model:", ["Model 1 (Mortality Prediction)", "Model 2 (Recovery Status Prediction)"])
 st.sidebar.markdown(
     """
     <div style=' font-weight: bold;'>Please select a prediction model:</div>
@@ -23,7 +23,7 @@ st.sidebar.markdown(
     unsafe_allow_html=True
 )
 model_choice = st.sidebar.radio(
-    "", ["Model 1 (ROSC on-site)", "Model 2 (30-day survival)"]
+    "", ["Model 1 (Mortality Prediction)", "Model 2 (Recovery Status Prediction)"]
 )
 
 # Reset prediction when model is changed
@@ -37,11 +37,11 @@ if st.session_state["last_model"] != model_choice:
 st.sidebar.markdown("""
 ### 📖 Model Overview
 
-**Model 1: On-site ROSC Prediction**  
-Predicts the likelihood of return of spontaneous circulation (ROSC) at the scene using pre-hospital indicators such as bystander CPR, AED use, initial rhythm, and EMS response time.
+**Model 1: Mortality Prediction**  
+Predicts the likelihood of death or survival in cases of poisoning, using key indicators such as poison type, exposure route, time to treatment, and initial vital signs.
 
-**Model 2: 30-day Survival Prediction**  
-Estimates 30-day survival after out-of-hospital cardiac arrest (OHCA) based on both pre-hospital and in-hospital factors, including emergency interventions and early hospital care.
+**Model 2: Recovery Status Prediction**  
+For patients who survive poisoning, this model further classifies their recovery outcome into "recovered" or "unrecovered" based on clinical course, treatment response, and post-exposure complications.
 """)
 
 
@@ -54,16 +54,16 @@ Estimates 30-day survival after out-of-hospital cardiac arrest (OHCA) based on b
 st.sidebar.markdown(
     """
     <div style='font-size: 0.9em;'>
-       ⚠️ Note: This model was developed using OHCA data only from Shenzhen Bao’an District, and its applicability to other regions or populations may be limited.
+       ⚠️ Note: This model was developed using poisoning data from specific populations, and its applicability to other types of poisoning cases or populations may be limited.
     </div>
     """,
     unsafe_allow_html=True
 )
 
-if model_choice == "Model 1 (ROSC on-site)":
-    st.markdown("## Return of Spontaneous Circulation on-site")
-elif model_choice == "Model 2 (30-day survival)":
-    st.markdown("## 30-day survival")
+if model_choice == "Model 1 (Mortality Prediction)":
+    st.markdown("## Mortality Prediction")
+elif model_choice == "Model 2 (Recovery Status Prediction)":
+    st.markdown("## Recovery Status Prediction")
 
 # =================== Pre-hospital Features (A组) ===================
 # st.markdown("## Return of Spontaneous Circulation on-site")
@@ -89,8 +89,8 @@ with st.expander("pre-hospital data", expanded=True):
 
 # =================== Post-hospital Features (B组，仅M2) ===================
 b_data = {}
-if model_choice == "Model 2 (30-day survival)":
-    # st.markdown("## 30-day survival")
+if model_choice == "Model 2 (Recovery Status Prediction)":
+    # st.markdown("## Recovery Status Prediction")
     with st.expander("in-hospital data", expanded=True):
         col1, col2 = st.columns(2)
         with col1:
@@ -127,7 +127,7 @@ x_features_m2 = x_features_m1 + [
     'PCI for ED','TTM for ED','ECMO for ED','Return of spontaneous circulation in ED'
 ]
 
-if model_choice == "Model 1 (ROSC on-site)":
+if model_choice == "Model 1 (Mortality Prediction)":
     model = joblib.load(model1_path)
     shap_fig_path = shap_fig1_path
     shap_data = shap1_data_csv
@@ -258,10 +258,10 @@ def get_gauge_option(value):
 
 
 if st.session_state.get("predict_done", False):
-    if model_choice == "Model 1 (ROSC on-site)":
+    if model_choice == "Model 1 (Mortality Prediction)":
         X_input = [a_data[feat] for feat in features]
         proba = model.predict_proba([X_input])[0][1]
-        label_text = "Probability of ROSC"
+        label_text = "Probability of Mortality"
     else:
         full_data = {**a_data, **b_data}
         X_input = [full_data[feat] for feat in features]
