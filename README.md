@@ -1,12 +1,11 @@
-
-# 🚑 Pre-Hospital ROSC & 30-Day Survival Prediction App
+# 🧪 Poisoning Outcome Prediction App
 
 **Streamlit-based clinical AI tool** that predicts:
 
-* **Model 1 (ROSC)**: Return of Spontaneous Circulation at the scene
-* **Model 2 (30-Day Survival)**: Survival within 30 days post-OHCA
+* **Model 1 (Mortality)**: Death or survival in poisoning cases
+* **Model 2 (Recovery Status)**: Recovery outcome for surviving patients (recovered/unrecovered)
 
-Designed for **real-time decision support** in out-of-hospital cardiac arrest (OHCA), this project integrates machine learning with clinical domain knowledge to assist pre-hospital and emergency care providers.
+Designed for **real-time decision support** in poisoning emergencies, this project integrates machine learning with clinical domain knowledge to assist emergency care providers in assessing patient prognosis.
 
 ---
 
@@ -24,39 +23,39 @@ Designed for **real-time decision support** in out-of-hospital cardiac arrest (O
 
 ## 🔍 Overview
 
-Out-of-hospital cardiac arrest (OHCA) is a time-sensitive emergency. Prognostication tools can guide clinical decisions, resource allocation, and communication. This app provides real-time probability estimates of:
+Poisoning is a critical medical emergency with highly variable outcomes. Prognostication tools can guide clinical decisions, treatment strategies, and resource allocation. This app provides real-time probability estimates of:
 
-* ROSC (Model 1): Whether spontaneous circulation returns on site
-* 30-Day Survival (Model 2): Whether the patient survives 30 days post-OHCA
+* Mortality (Model 1): Whether the patient will survive the poisoning incident
+* Recovery Status (Model 2): Whether surviving patients will achieve recovery or remain unrecovered
 
-Both models are based on **CatBoost classifiers**, trained on labeled registry data, and made interpretable with **SHAP** visualizations.
+Both models are based on **CatBoost classifiers**, trained on labeled clinical data, and made interpretable with **SHAP** visualizations.
 
 ---
 
 ## 🧠 Models Description
 
-### 🩺 Model 1 – On-site ROSC Prediction
+### 🩺 Model 1 – Mortality Prediction
 
-* **Goal**: Estimate the likelihood of successful resuscitation before hospital arrival.
+* **Goal**: Estimate the likelihood of death or survival in poisoning cases.
 * **Inputs**:
 
-  * Witnessed status
-  * Bystander CPR/AED
-  * Initial rhythm
-  * EMS arrival times
-  * Prehospital interventions (airway, adrenaline, etc.)
-* **Output**: Probability of ROSC at the scene.
+  * Poison type and dosage
+  * Route of exposure (oral, dermal, inhalation, etc.)
+  * Time from exposure to treatment
+  * Initial vital signs (blood pressure, heart rate, oxygen saturation)
+  * Patient demographics (age, comorbidities)
+* **Output**: Probability of mortality from poisoning.
 
-### 🏥 Model 2 – 30-Day Survival Prediction
+### 🏥 Model 2 – Recovery Status Prediction
 
-* **Goal**: Estimate survival probability 30 days after OHCA.
+* **Goal**: Estimate recovery outcome for patients who survive the acute poisoning phase.
 * **Inputs**:
 
   * All Model 1 features
-  * Hospital-based interventions
-  * ROSC status at ED
-  * Transport and ED timing data
-* **Output**: Estimated 30-day survival chance.
+  * Treatment response (antidote effectiveness, detoxification success)
+  * Hospital course (complications, organ function)
+  * Duration of critical care
+* **Output**: Probability of full recovery vs. unrecovered status.
 
 ---
 
@@ -66,7 +65,7 @@ Both models are based on **CatBoost classifiers**, trained on labeled registry d
 Easily enter model variables using dropdowns, sliders, and forms.
 
 ✅ **Dual Model Switching**:
-Choose between ROSC or survival prediction via sidebar toggle.
+Choose between mortality or recovery prediction via sidebar toggle.
 
 ✅ **Visual Model Explanation**:
 Understand model output with SHAP bar plots showing feature contributions.
@@ -75,11 +74,9 @@ Understand model output with SHAP bar plots showing feature contributions.
 Predictions are updated only when the “Predict” button is clicked to avoid auto-refresh.
 
 ✅ **Compact UI**:
-Tabbed or accordion-style layout to group features by phase (pre-hospital vs in-hospital).
+Tabbed or accordion-style layout to group features by category (exposure details, clinical status, treatment).
 
 ---
-
-
 
 ## 📦 Installation & Deployment
 
@@ -87,8 +84,8 @@ Tabbed or accordion-style layout to group features by phase (pre-hospital vs in-
 
 ```bash
 # Clone the repo
-git clone https://github.com/xinshou-xin/streamlit-pre-hospital.git
-cd OHCA
+git clone https://github.com/xinshou-xin/poisoning.git
+cd poisoning-prediction
 
 # Create a virtual environment
 python3 -m venv venv
@@ -111,17 +108,16 @@ The app is deployable via [Streamlit Community Cloud](https://streamlit.io/cloud
 
 ---
 
-
 ## 🧪 Dataset & Preprocessing
 
-The models were trained using a structured OHCA registry with features including:
+The models were trained using a structured poisoning registry with features including:
 
-* Demographics: Age, location
-* Prehospital events: CPR, defibrillation, time intervals
-* ED-level interventions
-* Outcomes: ROSC, survival
+* Exposure details: Poison type, route, dosage, timing
+* Clinical data: Vital signs, symptoms, laboratory findings
+* Treatment information: Antidotes, supportive care, duration
+* Outcomes: Survival status, recovery level
 
-Missing values were handled with median/mode imputation. Feature importance was assessed using SHAP values and domain knowledge.
+Missing values were handled with median/mode imputation. Feature importance was assessed using SHAP values and clinical domain knowledge.
 
 ---
 
@@ -129,7 +125,7 @@ Missing values were handled with median/mode imputation. Feature importance was 
 
 > This tool is intended **for research and educational use only**.
 > It is **not approved** for clinical use and should **not replace medical judgment**.
-> External validation and expert oversight are required before integration into EMS workflows.
+> External validation and expert oversight are required before integration into poisoning management workflows.
 
 ---
 

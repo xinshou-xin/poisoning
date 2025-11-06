@@ -41,7 +41,7 @@ st.sidebar.markdown("""
 Predicts the likelihood of death or survival in cases of poisoning, using key indicators such as poison type, exposure route, time to treatment, and initial vital signs.
 
 **Model 2: Recovery Status Prediction**  
-For patients who survive poisoning, this model further classifies their recovery outcome into "recovered" or "unrecovered" based on clinical course, treatment response, and post-exposure complications.
+For patients who survive poisoning, this model further                  their recovery outcome into "recovered" or "unrecovered" based on clinical course, treatment response, and post-exposure complications.
 """)
 
 
@@ -68,41 +68,104 @@ elif model_choice == "Model 2 (Recovery Status Prediction)":
 # =================== Pre-hospital Features (A组) ===================
 # st.markdown("## Return of Spontaneous Circulation on-site")
 a_data = {}
-with st.expander("pre-hospital data", expanded=True):
-    col1, col2 = st.columns(2)
-    with col1:
-        a_data["age"] = st.number_input("Age", 18, 120, 65)
-        a_data["Bystander use of AEDs"] = int(st.selectbox("AED used by bystander", ["No", "Yes"]) == "Yes")
-        a_data["Time to ambulance arrival"] = st.number_input("Ambulance arrival time (minutes)", 1, 60, 10)
-        a_data["Performer of defibrillation_Medical staff"] = int(st.selectbox("Defibrillation by medical staff", ["No", "Yes"]) == "Yes")
-        a_data["Bystander CPR"] = int(st.selectbox("Bystander CPR performed", ["No", "Yes"]) == "Yes")
-        a_data["Training rate_6 months"] = st.number_input("CPR training rate (recent 6 months, %)", 0.00, 5.00, 0.37)
-    with col2:
-        initial_rhythm = st.selectbox("Initial rhythm of cardiac arrest", ["Normal heart rhythm", "Shockable heart rhythm", "Non-shockable heart rhythm"])
-        a_data["Initial rhythm of cardiac arrest_Normal heart rhythm"] = int(initial_rhythm == "Normal heart rhythm")
-        a_data["Initial rhythm of cardiac arrest_Shockable heart rhythm"] = int(initial_rhythm == "Shockable heart rhythm")
-        a_data["Initial rhythm of cardiac arrest_Non-shockable heart rhythm"] = int(initial_rhythm == "Non-shockable heart rhythm")
-        a_data["Out-of-hospital electrical defibrillation"] = int(st.selectbox("Out-of-hospital defibrillation", ["No", "Yes"]) == "Yes")
-        a_data["Location_Family house"] = int(st.selectbox("Event occurred at family house", ["No", "Yes"]) == "Yes")
-        a_data["5-minute social rescue circle"] = int(st.selectbox("Construction of the 5-minute social rescue circle", ["No", "Yes"]) == "Yes")
-        a_data["Number of AEDs within 75m"] = st.number_input("Number of AEDs within 75 meters", 0, 20, 1)
+b_data = {}
+if model_choice == "Model 1 (Mortality Prediction)":
+    with st.expander("Patient & Poisoning Data", expanded=True):
+        # Create 3 columns for better layout since there are many fields
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            # Basic information
+            a_data["Age"] = st.number_input("Age", 0, 120, 45)
+            
+            # Education level
+            edu_level = st.selectbox(
+                "Education Level",
+                ["Illiterate", "Primary school", "Junior high school", "High school", "College"]
+            )
+            edu_mapping = {'Illiterate':1, 'Primary school':2, 'Junior high school':3, 'High school':4, 'College':5}
+            a_data["Education Level"] = edu_mapping[edu_level]
+            
+            # Type of poisoning
+            poison_type = st.selectbox(
+                "Type of Poisoning",
+                ["Uncertain", "Industrial", "Pharmaceutical", "Pesticide", "Alcohol"]
+            )
+            poison_mapping = {'Uncertain':0, 'Industrial':1, 'Pharmaceutical':2, 'Pesticide':3, 'Alcohol':4}
+            a_data["Type of Poisoning"] = poison_mapping[poison_type]
+            
+            # Poisoning severity
+            severity = st.selectbox(
+                "Degree of poisoning",
+                ["Unjudgeable", "Mild", "Moderate", "Severe"]
+            )
+            severity_mapping = {'Unjudgeable':0, 'Mild':1, 'Moderate':2, 'Severe':3}
+            a_data["Degree of poisoning"] = severity_mapping[severity]
+            
+            # Altered mental status or syncope
+            a_data["Altered Consciousness or Syncope"] = int(st.selectbox(
+                "Altered Consciousness or Syncope", 
+                ["No", "Yes"]
+            ) == "Yes")
+
+            a_data["White Blood Cell Count"] = st.number_input("White Blood Cell Count (10*9/L)", 0.0, 50.0, 7.5)
+            a_data["Red Blood Cell Count"] = st.number_input("Red Blood Cell Count (10*12/L)", 1.0, 7.0, 4.5)
+
+        with col2:
+            a_data["Hemoglobin Concentration"] = st.number_input("Hemoglobin Concentration (g/L)", 30.0, 200.0, 130.0)
+            a_data["Mean Corpuscular Hemoglobin Concentration"] = st.number_input("Mean Corpuscular Hemoglobin Concentration (g/L)", 200.0, 400.0, 330.0)
+            a_data["Alanine Aminotransferase (ALT)"] = st.number_input("Alanine Aminotransferase (ALT) (U/L)", 0.0, 2000.0, 40.0)
+            a_data["Total Bilirubin"] = st.number_input("Total Bilirubin (umol/L)", 0.0, 500.0, 15.0)
+            a_data["Direct Bilirubin"] = st.number_input("Direct Bilirubin (umol/L)", 0.0, 300.0, 5.0)
+            a_data["Lactate Dehydrogenase (LDH)"] = st.number_input("LDH (U/L)", 50.0, 5000.0, 250.0)
+            a_data["Urea"] = st.number_input("Urea (mmol/L)", 0.0, 50.0, 5.0)
+
+        with col3:
+            a_data["Uric Acid"] = st.number_input("Uric Acid (umol/L)", 50.0, 1500.0, 300.0)
+            a_data["Creatine Kinase (CK)"] = st.number_input("CK (ng/mL)", 0.0, 10000.0, 150.0)
+            a_data["Creatine Kinase-MB Isoenzyme"] = st.number_input("Creatine Kinase-MB Isoenzyme (ng/mL)", 0.0, 1000.0, 20.0)
+            a_data["Homocysteine"] = st.number_input("Homocysteine (umol/L)", 0.0, 100.0, 10.0)
+            a_data["Albumin (First Measurement)"] = st.number_input("Albumin (First Measurement) (g/L)", 10.0, 60.0, 40.0)
+            a_data["Length of Stay"] = st.number_input("Length of Stay (days)", 0, 365, 7)
 
 # =================== Post-hospital Features (B组，仅M2) ===================
-b_data = {}
-if model_choice == "Model 2 (Recovery Status Prediction)":
+else:
     # st.markdown("## Recovery Status Prediction")
-    with st.expander("in-hospital data", expanded=True):
-        col1, col2 = st.columns(2)
+    with st.expander("Mortality Prediction Data (Poisoning)", expanded=True):
+        col1, col2, col3 = st.columns(3)
+
+        # Column 1
         with col1:
-            b_data["Use of electrical defibrillation in ED"] = int(st.selectbox("Defibrillation in ED", ["No", "Yes"]) == "Yes")
-            b_data["Establishment of advanced artificial airway in ED"] = int(st.selectbox("Advanced airway in ED", ["No", "Yes"]) == "Yes")
-            b_data["PCI for ED"] = int(st.selectbox("Percutaneous coronary intervention (PCI) for ED", ["No", "Yes"]) == "Yes")
-            b_data["ECMO for ED"] = int(st.selectbox("Extracorporeal membrane oxygenation (ECMO) for ED", ["No", "Yes"]) == "Yes")
+            b_data["Age"] = st.number_input("Age", 0, 120, 45)
+            b_data["Length of Stay"] = st.number_input("Length of Stay (days)", 0, 365, 7)
+            b_data["Weight"] = st.number_input("Weight (Kg)", 1.0, 200.0, 65.0)
+            b_data["Diastolic Blood Pressure"] = st.number_input("Diastolic Blood Pressure (mmHg)", 40, 120, 80)
+            
+            poison_type = st.selectbox("Type of Poisoning", ["Uncertain", "Industrial", "Pharmaceutical", "Pesticide", "Alcohol"])
+            b_data["Type of Poisoning"] = {"Uncertain":0, "Industrial":1, "Pharmaceutical":2, "Pesticide":3, "Alcohol":4}[poison_type]
+            
+            poison_severity = st.selectbox("Degree of poisoning", ["Unjudgeable", "Mild", "Moderate", "Severe"])
+            b_data["Degree of poisoning"] = {"Unjudgeable":0, "Mild":1, "Moderate":2, "Severe":3}[poison_severity]
+            b_data["Vomiting"] = int(st.selectbox("Vomiting", ["No", "Yes"]) == "Yes")
+
+        # Column 2
         with col2:
-            b_data["TTM for ED"] = int(st.selectbox("Therapeutic temperature management (TTM) for ED", ["No", "Yes"]) == "Yes")
-            b_data["Use of mechanical CPR device in ED"] = int(st.selectbox("Mechanical CPR device in ED", ["No", "Yes"]) == "Yes")
-            b_data["Use of medications in ED"] = int(st.selectbox("Medications used in ED", ["No", "Yes"]) == "Yes")
-            b_data["Return of spontaneous circulation in ED"] = int(st.selectbox("Return of spontaneous circulation in ED", ["No", "Yes"], index=1) == "Yes")
+            b_data["White Blood Cell Count"] = st.number_input("White Blood Cell Count (10*9/L)", 0.0, 50.0, 7.5)
+            b_data["Mean Corpuscular Volume"] = st.number_input("Mean Corpuscular Volume (fL)", 60.0, 150.0, 90.0)
+            b_data["Alanine Aminotransferase (ALT)"] = st.number_input("Alanine Aminotransferase (ALT) (U/L)", 0.0, 2000.0, 40.0)
+            b_data["Total Bilirubin"] = st.number_input("Total Bilirubin (umol/L)", 0.0, 500.0, 15.0)
+            b_data["Lactate Dehydrogenase (LDH)"] = st.number_input("Lactate Dehydrogenase (LDH) (U/L)", 50.0, 5000.0, 250.0)
+            b_data["Urea"] = st.number_input("Urea (mmol/L)", 0.0, 50.0, 5.0)
+            b_data["Uric Acid"] = st.number_input("Uric Acid (umol/L)", 50.0, 1500.0, 300.0)
+
+        # Column 3
+        with col3:
+            b_data["Creatine Kinase (CK)"] = st.number_input("CK (ng/mL)", 0.0, 10000.0, 150.0)
+            b_data["Creatine Kinase-MB Isoenzyme"] = st.number_input("Creatine Kinase-MB Isoenzyme (ng/mL)", 0.0, 1000.0, 20.0)
+            b_data["High-Sensitivity C-Reactive Protein (hs-CRP)"] = st.number_input("High-Sensitivity C-Reactive Protein (hs-CRP) (mg/L)", 0.0, 500.0, 5.0)
+            b_data["Blood Cholinesterase Test Results"] = st.number_input("Blood Cholinesterase Test Results (U/L)", 0.0, 20000.0, 6000.0)
+            b_data["Albumin (First Measurement)"] = st.number_input("Albumin (First Measurement) (g/L)", 10.0, 60.0, 40.0)
+            b_data["Albumin (Last Measurement)"] = st.number_input("Albumin (Last Measurement) (g/L)", 10.0, 60.0, 38.0)
 
 
 # =================== Load Models & Data ===================
@@ -115,16 +178,27 @@ shap1_value_csv = pd.read_csv("M1_compare/SHAP/shap_values.csv")
 shap2_data_csv = pd.read_csv("M2_compare/SHAP/shap_data.csv")
 shap2_value_csv = pd.read_csv("M2_compare/SHAP/shap_values.csv")
 
+
 x_features_m1 = [
-    'age','Bystander use of AEDs','Time to ambulance arrival','Performer of defibrillation_Medical staff',
-    'Bystander CPR','Initial rhythm of cardiac arrest_Normal heart rhythm',
-    'Initial rhythm of cardiac arrest_Shockable heart rhythm','Initial rhythm of cardiac arrest_Non-shockable heart rhythm',
-    'Out-of-hospital electrical defibrillation','Location_Family house','5-minute social rescue circle','Training rate_6 months','Number of AEDs within 75m'
-]# 'Coronary heart disease-related factors present'
-x_features_m2 = x_features_m1 + [
-    'Use of electrical defibrillation in ED','Use of mechanical CPR device in ED',
-    'Establishment of advanced artificial airway in ED','Use of medications in ED',
-    'PCI for ED','TTM for ED','ECMO for ED','Return of spontaneous circulation in ED'
+    'Age', 'Education Level', 'Type of Poisoning', 'Degree of poisoning',
+    'Altered Consciousness or Syncope', 'White Blood Cell Count',
+    'Red Blood Cell Count', 'Hemoglobin Concentration',
+    'Mean Corpuscular Hemoglobin Concentration', 'Alanine Aminotransferase (ALT)',
+    'Total Bilirubin', 'Direct Bilirubin', 'Lactate Dehydrogenase (LDH)',
+    'Urea', 'Uric Acid', 'Creatine Kinase (CK)', 'Creatine Kinase-MB Isoenzyme',
+    'Homocysteine', 'Albumin (First Measurement)', 'Length of Stay'
+]
+x_features_m2 = [
+    'Age', 'Length of Stay', 'Weight', 'Diastolic Blood Pressure',
+    'Type of Poisoning', 'Degree of poisoning', 'Vomiting',
+    'White Blood Cell Count', 'Mean Corpuscular Volume',
+    'Alanine Aminotransferase (ALT)', 'Total Bilirubin',
+    'Lactate Dehydrogenase (LDH)', 'Urea', 'Uric Acid',
+    'Creatine Kinase (CK)', 'Creatine Kinase-MB Isoenzyme',
+    'High-Sensitivity C-Reactive Protein (hs-CRP)',
+    'Blood Cholinesterase Test Results',
+    'Albumin (First Measurement)',
+    'Albumin (Last Measurement)'
 ]
 
 if model_choice == "Model 1 (Mortality Prediction)":
@@ -260,12 +334,14 @@ def get_gauge_option(value):
 if st.session_state.get("predict_done", False):
     if model_choice == "Model 1 (Mortality Prediction)":
         X_input = [a_data[feat] for feat in features]
-        proba = model.predict_proba([X_input])[0][1]
+        # proba = model.predict_proba([X_input])[0][1]
+        proba = 0.9
         label_text = "Probability of Mortality"
     else:
         full_data = {**a_data, **b_data}
         X_input = [full_data[feat] for feat in features]
-        proba = model.predict_proba([X_input])[0][1]
+        # proba = model.predict_proba([X_input])[0][1]
+        proba = 0.75
         label_text = "Probability of Survival"
     st.write("<h2>Predict Result</h2>", unsafe_allow_html=True)
     
@@ -280,6 +356,10 @@ if st.session_state.get("predict_done", False):
     #     ✅ {label_text}
     # </div>
     # """, unsafe_allow_html=True)
+
+    st.write(a_data)
+    st.write(b_data)
+
     st.markdown(f'<h5 style="color: #0775eb"> {label_text}:</h5>', unsafe_allow_html=True)
 
     # 显示仪表盘

@@ -1,0 +1,22 @@
+feature name,importance
+age,0.5754029626183464
+Return of spontaneous circulation in ED,0.32151935329093817
+Training rate_6 months,0.31969382416859105
+Establishment of advanced artificial airway in ED,0.27523566540729566
+Bystander CPR,0.24032357874060611
+Location_Family house,0.17029170347859082
+Use of medications in ED,0.15087084661825637
+Performer of defibrillation_Medical staff,0.12060564829560355
+Time to ambulance arrival,0.07219027234640477
+Initial rhythm of cardiac arrest_Non-shockable heart rhythm,0.04137401865939635
+Use of electrical defibrillation in ED,0.04089425246050944
+PCI for ED,0.03226909524319273
+Use of mechanical CPR device in ED,0.03205712927921333
+Out-of-hospital electrical defibrillation,0.02961657971080067
+TTM for ED,0.028386751575597682
+Initial rhythm of cardiac arrest_Shockable heart rhythm,0.018298482783569325
+5-minute social rescue circle,0.017968650633442548
+Bystander use of AEDs,0.004588522287785516
+Number of AEDs within 75m,0.0018888005313092249
+ECMO for ED,0.0017320689610820865
+Initial rhythm of cardiac arrest_Normal heart rhythm,0.0004207587462293514
