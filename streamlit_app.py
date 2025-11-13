@@ -157,8 +157,8 @@ else:
 
 
 # =================== Load Models & Data ===================
-model1_path = "M1_compare/models/catboost_model_fold_3.pkl"
-model2_path = "M2_compare/models/catboost_model_fold_1.pkl"
+model1_path = "M1_compare/models/Catboost_model_fold_3.pkl"
+model2_path = "M2_compare/models/Catboost_model_fold_1.pkl"
 shap_fig1_path = "M1_compare/SHAP/shap_summary_plot.png"
 shap_fig2_path = "M2_compare/SHAP/shap_summary_plot.png"
 shap1_data_csv = pd.read_csv("M1_compare/SHAP/shap_data.csv")
