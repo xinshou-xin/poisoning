@@ -1,0 +1,22 @@
+Feature,Importance
+Type of Poisoning,0.3900419137661305
+Degree of poisoning,0.350686033166737
+Altered Consciousness or Syncope,0.30590088915819513
+Alanine Aminotransferase (ALT),0.266531807951059
+White Blood Cell Count,0.24632989411161155
+Total Bilirubin,0.2054765631393854
+Creatine Kinase-MB Isoenzyme,0.1539092166192674
+Lactate Dehydrogenase (LDH),0.14753462980373003
+Albumin (Last Measurement),0.12204572319650227
+Urea,0.11937274805204322
+Uric Acid,0.10022557203653006
+Red Blood Cell Count,0.09821810068227985
+Length of Stay,0.0906696566181476
+Age,0.0814839174137009
+Homocysteine,0.06126159239687799
+Education Level,0.058820017233732313
+Albumin (First Measurement),0.05696544444825642
+Creatine Kinase (CK),0.03486205736678758
+Direct Bilirubin,0.03150874852770726
+Mean Corpuscular Hemoglobin Concentration,0.0182012393788345
+Hemoglobin Concentration,0.016632771696106705

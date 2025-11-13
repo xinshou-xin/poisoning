@@ -10,8 +10,13 @@ import matplotlib.pyplot as plt
 import matplotlib
 from streamlit_echarts import st_echarts
 
-matplotlib.use("Agg")
+if not hasattr(pd.DataFrame, "iteritems"):
+    pd.DataFrame.iteritems = pd.DataFrame.items
+
+# matplotlib.use("Agg")
+
 st.set_page_config(page_title="Poisoning Prediction", layout="wide", page_icon="🦈")
+
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # =================== Sidebar ===================
@@ -111,8 +116,7 @@ if model_choice == "Model 1 (Mortality Prediction)":
         a_data["Direct Bilirubin"] = st.number_input("Direct Bilirubin (umol/L)", 0.0, 300.0, 5.0)
         a_data["Homocysteine"] = st.number_input("Homocysteine (umol/L)", 0.0, 100.0, 10.0)
         a_data["Altered Consciousness or Syncope"] = int(st.selectbox("Altered Consciousness or Syncope", ["No", "Yes"]) == "Yes")
-        
-
+    
 # =================== Post-hospital Features (B组，仅M2) ===================
 else:
     # st.markdown("## Recovery Status Prediction")
@@ -153,8 +157,8 @@ else:
 
 
 # =================== Load Models & Data ===================
-model1_path = "M1_compare/modelsM1/catboost_model_fold_2.pkl"
-model2_path = "M2_compare/modelsM2/catboost_model_fold_2.pkl"
+model1_path = "M1_compare/models/catboost_model_fold_3.pkl"
+model2_path = "M2_compare/models/catboost_model_fold_1.pkl"
 shap_fig1_path = "M1_compare/SHAP/shap_summary_plot.png"
 shap_fig2_path = "M2_compare/SHAP/shap_summary_plot.png"
 shap1_data_csv = pd.read_csv("M1_compare/SHAP/shap_data.csv")
@@ -186,6 +190,7 @@ x_features_m2 = [
 ]
 
 if model_choice == "Model 1 (Mortality Prediction)":
+    # st.write("a_data:", a_data)
     model = joblib.load(model1_path)
     shap_fig_path = shap_fig1_path
     shap_data = shap1_data_csv
@@ -240,6 +245,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 if st.button("🚀 Predict"):
     st.session_state["predict_done"] = True
+
 # 仪表盘配置模板函数
 def get_gauge_option(value):
     return {
@@ -316,34 +322,30 @@ def get_gauge_option(value):
 
 
 if st.session_state.get("predict_done", False):
+
+    model_feature_names = model.feature_names_
+
+    # st.write("model_feature_names:", model_feature_names)
+
     if model_choice == "Model 1 (Mortality Prediction)":
-        X_input = [a_data[feat] for feat in features]
-        # proba = model.predict_proba([X_input])[0][1]
-        proba = 0.9
+        # 构建输入 DataFrame
+        X_input_df = pd.DataFrame([a_data])
+        # 重新排列列顺序以匹配模型
+        X_input_df = X_input_df.reindex(columns=model_feature_names)
+        # st.write("X_input_df:", X_input_df)
+
+        proba = model.predict_proba(X_input_df)[0][1]
+        st.write("proba:", proba)
         label_text = "Probability of Mortality"
     else:
-        full_data = {**a_data, **b_data}
-        X_input = [full_data[feat] for feat in features]
-        # proba = model.predict_proba([X_input])[0][1]
-        proba = 0.75
+        X_input_df = pd.DataFrame([b_data])
+        X_input_df = X_input_df.reindex(columns=model_feature_names)
+        proba = model.predict_proba(X_input_df)[0][1]
         label_text = "Probability of Non-recovery"
+
+
     st.write("<h2>Predict Result</h2>", unsafe_allow_html=True)
     
-    # 显示标题
-    # st.markdown(f"""
-    # <div style='
-    #     text-align: left;
-    #     font-size: 22px;
-    #     font-weight: bold;
-    #     margin-bottom: 10px;
-    #     color: #202124'>
-    #     ✅ {label_text}
-    # </div>
-    # """, unsafe_allow_html=True)
-
-    st.write(a_data)
-    st.write(b_data)
-
     st.markdown(f'<h5 style="color: #0775eb"> {label_text}:</h5>', unsafe_allow_html=True)
 
     # 显示仪表盘
@@ -368,10 +370,26 @@ if st.session_state.get("predict_done", False):
         st.write(fig)
 
     # =================== Waterfall ===================
+    # st.write("<h2>Personalized Risk Interpretation</h2>", unsafe_allow_html=True)
+    # st.markdown('<h5 style="color: #0775eb">Waterfall plot:</h5>', unsafe_allow_html=True)
+    # explainer = shap.Explainer(model)
+    # X_input_df = pd.DataFrame([X_input], columns=features)
+    # shap_values = explainer(X_input_df)
+    # plt.figure(figsize=(8, 5))
+    # shap.waterfall_plot(shap_values[0], max_display=shap_values[0].values.shape[0], show=False)
+    # buf = io.BytesIO()
+    # plt.savefig(buf, format='png', bbox_inches='tight')
+    # buf.seek(0)
+    # st.markdown(
+    #     f'<div style="display: flex; justify-content: center;">'
+    #     f'<img src="data:image/png;base64,{base64.b64encode(buf.read()).decode()}" alt="Waterfall plot" style="width: 900px;">'
+    #     f'</div>', unsafe_allow_html=True)
+    # plt.close()
+    # =================== Waterfall ===================
     st.write("<h2>Personalized Risk Interpretation</h2>", unsafe_allow_html=True)
     st.markdown('<h5 style="color: #0775eb">Waterfall plot:</h5>', unsafe_allow_html=True)
+
     explainer = shap.Explainer(model)
-    X_input_df = pd.DataFrame([X_input], columns=features)
     shap_values = explainer(X_input_df)
     plt.figure(figsize=(8, 5))
     shap.waterfall_plot(shap_values[0], max_display=shap_values[0].values.shape[0], show=False)
