@@ -328,14 +328,9 @@ if st.session_state.get("predict_done", False):
     # st.write("model_feature_names:", model_feature_names)
 
     if model_choice == "Model 1 (Mortality Prediction)":
-        # 构建输入 DataFrame
         X_input_df = pd.DataFrame([a_data])
-        # 重新排列列顺序以匹配模型
         X_input_df = X_input_df.reindex(columns=model_feature_names)
-        # st.write("X_input_df:", X_input_df)
-
         proba = model.predict_proba(X_input_df)[0][1]
-        st.write("proba:", proba)
         label_text = "Probability of Mortality"
     else:
         X_input_df = pd.DataFrame([b_data])
