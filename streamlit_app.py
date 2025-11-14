@@ -96,7 +96,7 @@ if model_choice == "Model 1 (Mortality Prediction)":
     with col2:
         a_data["Urea"] = st.number_input("Urea (mmol/L)", 0.0, 70.0, 5.0)
         a_data["Uric Acid"] = st.number_input("Uric Acid (umol/L)", 00.0, 1000.0, 263.0)
-        a_data["Creatine Kinase (CK)"] = st.number_input("CK (ng/mL)", 0.0, 10000.0, 150.0)
+        a_data["Creatine Kinase (CK)"] = st.number_input("Creatine Kinase (CK) (ng/mL)", 0.0, 10000.0, 150.0)
         a_data["Creatine Kinase-MB Isoenzyme"] = st.number_input("Creatine Kinase-MB Isoenzyme (ng/mL)", 0.0, 500.0, 20.0)
         a_data["Albumin (First Measurement)"] = st.number_input("Albumin (First Measurement) (g/L)", 10.0, 70.0, 40.0)
         a_data["Length of Stay"] = st.number_input("Length of Stay (days)", 0, 50, 7)
@@ -112,7 +112,7 @@ if model_choice == "Model 1 (Mortality Prediction)":
     with col3:
         a_data["Red Blood Cell Count"] = st.number_input("Red Blood Cell Count (10*12/L)", 1.0, 7.0, 4.5)
         a_data["Hemoglobin Concentration"] = st.number_input("Hemoglobin Concentration (g/L)", 30.0, 400.0, 335.0)
-        a_data["Mean Corpuscular Hemoglobin Concentration"] = st.number_input("Mean Corpuscular Hemoglobin Concentration (g/L)", 0.0, 60.0, 30.0)
+        a_data["Mean Corpuscular Hemoglobin Concentration"] = st.number_input("Mean Corpuscular Hemoglobin Concentration (g/L)", 100.0, 400.0, 335.0)
         a_data["Direct Bilirubin"] = st.number_input("Direct Bilirubin (umol/L)", 0.0, 300.0, 5.0)
         a_data["Homocysteine"] = st.number_input("Homocysteine (umol/L)", 0.0, 100.0, 14.0)
         a_data["Altered Consciousness or Syncope"] = int(st.selectbox("Altered Consciousness or Syncope", ["No", "Yes"]) == "Yes")
