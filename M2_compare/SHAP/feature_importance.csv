@@ -1,22 +1,21 @@
 Feature,Importance
-Degree of poisoning,0.6977966134956101
-Type of Poisoning,0.3779363147831881
-White Blood Cell Count,0.3393706733671786
-Urea,0.16967397118913807
-Lactate Dehydrogenase (LDH),0.16285898307110738
-Creatine Kinase-MB Isoenzyme,0.1408644611016671
-Length of Stay,0.12016295826703988
-Total Bilirubin,0.11401966675813613
-Age,0.09459872625511699
-Alanine Aminotransferase (ALT),0.06739866269290473
-Uric Acid,0.06542634930205019
-Creatine Kinase (CK),0.05608776496891466
-Altered Consciousness or Syncope,0.049732640616497424
-Albumin (Last Measurement),0.03187005167566944
-Albumin (First Measurement),0.030394433233586968
-Red Blood Cell Count,0.028250065403306955
-Mean Corpuscular Hemoglobin Concentration,0.026787620916301512
-Hemoglobin Concentration,0.024993934030089253
-Direct Bilirubin,0.023482558526835333
-Education Level,0.022656479507526934
-Homocysteine,0.021956857649975858
+Degree of poisoning,0.7105919184086495
+Type of Poisoning,0.3740251562519363
+White Blood Cell Count,0.3347830980874484
+Lactate Dehydrogenase (LDH),0.1705293267833304
+Urea,0.16951645445663807
+Creatine Kinase-MB Isoenzyme,0.12783736104193263
+Length of Stay,0.12558798456042433
+Total Bilirubin,0.10820788173380468
+Vomiting,0.09673881987703233
+Age,0.09057107290459517
+Uric Acid,0.07842684725255591
+Diastolic Blood Pressure,0.07746538930762936
+Alanine Aminotransferase (ALT),0.06128117251452132
+Mean Corpuscular Volume,0.05625894675994891
+Weight,0.05521743148781362
+Creatine Kinase (CK),0.05179298402023538
+Blood Cholinesterase Test Results,0.04394413956813777
+High-Sensitivity C-Reactive Protein (hs-CRP),0.035898159496870384
+Albumin (Last Measurement),0.03414718032197239
+Albumin (First Measurement),0.03089638041991802

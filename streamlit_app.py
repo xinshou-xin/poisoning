@@ -88,18 +88,18 @@ if model_choice == "Model 1 (Mortality Prediction)":
         severity = st.selectbox("Degree of poisoning",["Unjudgeable", "Mild", "Moderate", "Severe"])
         severity_mapping = {'Unjudgeable':0, 'Mild':1, 'Moderate':2, 'Severe':3}
         a_data["Degree of poisoning"] = severity_mapping[severity]
-        a_data["White Blood Cell Count"] = st.number_input("White Blood Cell Count (10*9/L)", 0.0, 50.0, 7.5)
-        a_data["Alanine Aminotransferase (ALT)"] = st.number_input("Alanine Aminotransferase (ALT) (U/L)", 0.0, 2000.0, 40.0)
-        a_data["Total Bilirubin"] = st.number_input("Total Bilirubin (umol/L)", 0.0, 500.0, 15.0)
-        a_data["Lactate Dehydrogenase (LDH)"] = st.number_input("Lactate Dehydrogenase (LDH) (U/L)", 50.0, 5000.0, 250.0)
+        a_data["White Blood Cell Count"] = st.number_input("White Blood Cell Count (10*9/L)", 1.0, 50.0, 8.5)
+        a_data["Alanine Aminotransferase (ALT)"] = st.number_input("Alanine Aminotransferase (ALT) (U/L)", 0.0, 1050.0, 40.0)
+        a_data["Total Bilirubin"] = st.number_input("Total Bilirubin (umol/L)", 0.0, 500.0, 11.0)
+        a_data["Lactate Dehydrogenase (LDH)"] = st.number_input("Lactate Dehydrogenase (LDH) (U/L)", 50.0, 3500.0, 300.0)
 
     with col2:
-        a_data["Urea"] = st.number_input("Urea (mmol/L)", 0.0, 50.0, 5.0)
-        a_data["Uric Acid"] = st.number_input("Uric Acid (umol/L)", 50.0, 1500.0, 300.0)
+        a_data["Urea"] = st.number_input("Urea (mmol/L)", 0.0, 70.0, 5.0)
+        a_data["Uric Acid"] = st.number_input("Uric Acid (umol/L)", 00.0, 1000.0, 263.0)
         a_data["Creatine Kinase (CK)"] = st.number_input("CK (ng/mL)", 0.0, 10000.0, 150.0)
-        a_data["Creatine Kinase-MB Isoenzyme"] = st.number_input("Creatine Kinase-MB Isoenzyme (ng/mL)", 0.0, 1000.0, 20.0)
-        a_data["Albumin (First Measurement)"] = st.number_input("Albumin (First Measurement) (g/L)", 10.0, 60.0, 40.0)
-        a_data["Length of Stay"] = st.number_input("Length of Stay (days)", 0, 365, 7)
+        a_data["Creatine Kinase-MB Isoenzyme"] = st.number_input("Creatine Kinase-MB Isoenzyme (ng/mL)", 0.0, 500.0, 20.0)
+        a_data["Albumin (First Measurement)"] = st.number_input("Albumin (First Measurement) (g/L)", 10.0, 70.0, 40.0)
+        a_data["Length of Stay"] = st.number_input("Length of Stay (days)", 0, 50, 7)
         
         # Education level
         edu_level = st.selectbox(
@@ -111,10 +111,10 @@ if model_choice == "Model 1 (Mortality Prediction)":
         
     with col3:
         a_data["Red Blood Cell Count"] = st.number_input("Red Blood Cell Count (10*12/L)", 1.0, 7.0, 4.5)
-        a_data["Hemoglobin Concentration"] = st.number_input("Hemoglobin Concentration (g/L)", 30.0, 200.0, 130.0)
-        a_data["Mean Corpuscular Hemoglobin Concentration"] = st.number_input("Mean Corpuscular Hemoglobin Concentration (g/L)", 200.0, 400.0, 330.0)
+        a_data["Hemoglobin Concentration"] = st.number_input("Hemoglobin Concentration (g/L)", 30.0, 400.0, 335.0)
+        a_data["Mean Corpuscular Hemoglobin Concentration"] = st.number_input("Mean Corpuscular Hemoglobin Concentration (g/L)", 0.0, 60.0, 30.0)
         a_data["Direct Bilirubin"] = st.number_input("Direct Bilirubin (umol/L)", 0.0, 300.0, 5.0)
-        a_data["Homocysteine"] = st.number_input("Homocysteine (umol/L)", 0.0, 100.0, 10.0)
+        a_data["Homocysteine"] = st.number_input("Homocysteine (umol/L)", 0.0, 100.0, 14.0)
         a_data["Altered Consciousness or Syncope"] = int(st.selectbox("Altered Consciousness or Syncope", ["No", "Yes"]) == "Yes")
     
 # =================== Post-hospital Features (B组，仅M2) ===================
@@ -129,29 +129,29 @@ else:
         b_data["Type of Poisoning"] = {"Uncertain":0, "Industrial":1, "Pharmaceutical":2, "Pesticide":3, "Alcohol":4}[poison_type]
         poison_severity = st.selectbox("Degree of poisoning", ["Unjudgeable", "Mild", "Moderate", "Severe"])
         b_data["Degree of poisoning"] = {"Unjudgeable":0, "Mild":1, "Moderate":2, "Severe":3}[poison_severity]
-        b_data["White Blood Cell Count"] = st.number_input("White Blood Cell Count (10*9/L)", 0.0, 50.0, 7.5)
-        b_data["Alanine Aminotransferase (ALT)"] = st.number_input("Alanine Aminotransferase (ALT) (U/L)", 0.0, 2000.0, 40.0)
+        b_data["White Blood Cell Count"] = st.number_input("White Blood Cell Count (10*9/L)", 1.0, 50.0, 8.5)
+        b_data["Alanine Aminotransferase (ALT)"] = st.number_input("Alanine Aminotransferase (ALT) (U/L)", 0.0, 1050.0, 40.0)
         b_data["Total Bilirubin"] = st.number_input("Total Bilirubin (umol/L)", 0.0, 500.0, 15.0)
-        b_data["Lactate Dehydrogenase (LDH)"] = st.number_input("Lactate Dehydrogenase (LDH) (U/L)", 50.0, 5000.0, 250.0)
+        b_data["Lactate Dehydrogenase (LDH)"] = st.number_input("Lactate Dehydrogenase (LDH) (U/L)", 50.0, 3500.0, 300.0)
 
 
     # Column 2
     with col2:
-        b_data["Urea"] = st.number_input("Urea (mmol/L)", 0.0, 50.0, 5.0)
-        b_data["Uric Acid"] = st.number_input("Uric Acid (umol/L)", 50.0, 1500.0, 300.0)
+        b_data["Urea"] = st.number_input("Urea (mmol/L)", 0.0, 70.0, 5.0)
+        b_data["Uric Acid"] = st.number_input("Uric Acid (umol/L)", 0.0, 1000.0, 263.0)
         b_data["Creatine Kinase (CK)"] = st.number_input("CK (ng/mL)", 0.0, 10000.0, 150.0)
-        b_data["Creatine Kinase-MB Isoenzyme"] = st.number_input("Creatine Kinase-MB Isoenzyme (ng/mL)", 0.0, 1000.0, 20.0)
-        b_data["Albumin (First Measurement)"] = st.number_input("Albumin (First Measurement) (g/L)", 10.0, 60.0, 40.0)
-        b_data["Length of Stay"] = st.number_input("Length of Stay (days)", 0, 365, 7)
+        b_data["Creatine Kinase-MB Isoenzyme"] = st.number_input("Creatine Kinase-MB Isoenzyme (ng/mL)", 0.0, 500.0, 20.0)
+        b_data["Albumin (First Measurement)"] = st.number_input("Albumin (First Measurement) (g/L)", 10.0, 70.0, 40.0)
+        b_data["Length of Stay"] = st.number_input("Length of Stay (days)", 0, 50, 7)
         b_data["High-Sensitivity C-Reactive Protein (hs-CRP)"] = st.number_input("High-Sensitivity C-Reactive Protein (hs-CRP) (mg/L)", 0.0, 500.0, 5.0)
 
 
     # Column 3
     with col3:
-        b_data["Blood Cholinesterase Test Results"] = st.number_input("Blood Cholinesterase Test Results (U/L)", 0.0, 20000.0, 6000.0)
-        b_data["Albumin (Last Measurement)"] = st.number_input("Albumin (Last Measurement) (g/L)", 10.0, 60.0, 38.0)
-        b_data["Weight"] = st.number_input("Weight (Kg)", 1.0, 200.0, 65.0)
-        b_data["Diastolic Blood Pressure"] = st.number_input("Diastolic Blood Pressure (mmHg)", 40, 120, 80)
+        b_data["Blood Cholinesterase Test Results"] = st.number_input("Blood Cholinesterase Test Results (U/L)", 0.0, 20.0, 3.0)
+        b_data["Albumin (Last Measurement)"] = st.number_input("Albumin (Last Measurement) (g/L)", 10.0, 70.0, 40.0)
+        b_data["Weight"] = st.number_input("Weight (Kg)", 2.0, 200.0, 65.0)
+        b_data["Diastolic Blood Pressure"] = st.number_input("Diastolic Blood Pressure (mmHg)", 10, 200, 80)
         b_data["Mean Corpuscular Volume"] = st.number_input("Mean Corpuscular Volume (fL)", 60.0, 150.0, 90.0)
         b_data["Vomiting"] = int(st.selectbox("Vomiting", ["No", "Yes"]) == "Yes")
 
@@ -243,6 +243,7 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
+
 if st.button("🚀 Predict"):
     st.session_state["predict_done"] = True
 
