@@ -116,7 +116,7 @@ if model_choice == "Model 1 (Mortality Prediction)":
         a_data["Direct Bilirubin"] = st.number_input("Direct Bilirubin (umol/L)", 0.0, 300.0, 5.0)
         a_data["Homocysteine"] = st.number_input("Homocysteine (umol/L)", 0.0, 100.0, 14.0)
         a_data["Altered Consciousness or Syncope"] = int(st.selectbox("Altered Consciousness or Syncope", ["No", "Yes"]) == "Yes")
-    
+
 # =================== Post-hospital Features (B组，仅M2) ===================
 else:
     # st.markdown("## Recovery Status Prediction")
@@ -176,6 +176,7 @@ x_features_m1 = [
     'Urea', 'Uric Acid', 'Creatine Kinase (CK)', 'Creatine Kinase-MB Isoenzyme',
     'Homocysteine', 'Albumin (First Measurement)', 'Length of Stay'
 ]
+
 x_features_m2 = [
     'Age', 'Length of Stay', 'Weight', 'Diastolic Blood Pressure',
     'Type of Poisoning', 'Degree of poisoning', 'Vomiting',
@@ -341,7 +342,7 @@ if st.session_state.get("predict_done", False):
 
 
     st.write("<h2>Predict Result</h2>", unsafe_allow_html=True)
-    
+
     st.markdown(f'<h5 style="color: #0775eb"> {label_text}:</h5>', unsafe_allow_html=True)
 
     # 显示仪表盘
