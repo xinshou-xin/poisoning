@@ -46,7 +46,7 @@ st.sidebar.markdown("""
 Predicts the likelihood of death or survival in cases of poisoning, using key indicators such as poison type, exposure route, time to treatment, and initial vital signs.
 
 **Model 2: Recovery Status Prediction**  
-For patients who survive poisoning, this model further their recovery outcome into "recovered" or "unrecovered" based on clinical course, treatment response, and post-exposure complications.
+This model classifies the recovery outcome of poisoning patients into "recovered" or "unrecovered", considering clinical course, treatment response, and post-exposure complications. It covers all poisoning patients (including those who do not survive, where "unrecovered" encompasses fatal cases).
 """)
 
 
@@ -59,7 +59,7 @@ For patients who survive poisoning, this model further their recovery outcome in
 st.sidebar.markdown(
     """
     <div style='font-size: 0.9em;'>
-       ⚠️ Note: This model was developed using poisoning data from specific populations, and its applicability to other types of poisoning cases or populations may be limited.
+       ⚠️ Note: This model was developed using poisoning data from specific populations, and its applicability to other types of poisoning cases or populations may be limited. If needed, retraining and fine-tuning are required.
     </div>
     """,
     unsafe_allow_html=True
