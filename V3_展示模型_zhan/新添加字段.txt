@@ -1,0 +1,34 @@
+M1  第3折（Catboost_model_fold_3.pkl）
+M2第1折（Catboost_model_fold_1.pkl）的auc最高
+
+
+M1 模型
+Vomiting
+Nausea
+High-Sensitivity C-Reactive Protein (hs-CRP)
+Serum Creatinine
+Troponin I
+Mean Corpuscular Volume
+Mean Corpuscular Hemoglobin
+D-Dimer
+Platelet Count
+Potassium
+Sodium
+Chloride
+Carbon Dioxide
+Prothrombin Time
+Lactate
+
+M2 模型
+Nausea
+Serum Creatinine
+Troponin I
+Mean Corpuscular Hemoglobin
+D-Dimer
+Platelet Count
+Potassium
+Sodium
+Chloride
+Carbon Dioxide
+Prothrombin Time
+Lactate

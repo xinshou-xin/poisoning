@@ -92,13 +92,14 @@ if model_choice == "Model 1 (Mortality Prediction)":
         a_data["Alanine Aminotransferase (ALT)"] = st.number_input("Alanine Aminotransferase (ALT) (U/L)", 0.0, 1050.0, 40.0)
         a_data["Total Bilirubin"] = st.number_input("Total Bilirubin (umol/L)", 0.0, 500.0, 11.0)
         a_data["Lactate Dehydrogenase (LDH)"] = st.number_input("Lactate Dehydrogenase (LDH) (U/L)", 50.0, 3500.0, 300.0)
-
-    with col2:
         a_data["Urea"] = st.number_input("Urea (mmol/L)", 0.0, 70.0, 5.0)
         a_data["Uric Acid"] = st.number_input("Uric Acid (umol/L)", 00.0, 1000.0, 263.0)
         a_data["Creatine Kinase (CK)"] = st.number_input("Creatine Kinase (CK) (ng/mL)", 0.0, 10000.0, 150.0)
         a_data["Creatine Kinase-MB Isoenzyme"] = st.number_input("Creatine Kinase-MB Isoenzyme (ng/mL)", 0.0, 500.0, 20.0)
         a_data["Albumin (First Measurement)"] = st.number_input("Albumin (First Measurement) (g/L)", 10.0, 70.0, 40.0)
+
+    with col2:
+
         a_data["Length of Stay"] = st.number_input("Length of Stay (days)", 0, 50, 7)
         
         # Education level
@@ -108,14 +109,29 @@ if model_choice == "Model 1 (Mortality Prediction)":
         )
         edu_mapping = {'Illiterate':1, 'Primary school':2, 'Junior high school':3, 'High school':4, 'College':5}
         a_data["Education Level"] = edu_mapping[edu_level]
-        
-    with col3:
         a_data["Red Blood Cell Count"] = st.number_input("Red Blood Cell Count (10*12/L)", 1.0, 7.0, 4.5)
         a_data["Hemoglobin Concentration"] = st.number_input("Hemoglobin Concentration (g/L)", 30.0, 400.0, 335.0)
         a_data["Mean Corpuscular Hemoglobin Concentration"] = st.number_input("Mean Corpuscular Hemoglobin Concentration (g/L)", 100.0, 400.0, 335.0)
         a_data["Direct Bilirubin"] = st.number_input("Direct Bilirubin (umol/L)", 0.0, 300.0, 5.0)
         a_data["Homocysteine"] = st.number_input("Homocysteine (umol/L)", 0.0, 100.0, 14.0)
         a_data["Altered Consciousness or Syncope"] = int(st.selectbox("Altered Consciousness or Syncope", ["No", "Yes"]) == "Yes")
+        a_data["Vomiting"] = int(st.selectbox("Vomiting", ["No", "Yes"]) == "Yes")
+        a_data["Nausea"] = int(st.selectbox("Nausea", ["No", "Yes"]) == "Yes")
+        a_data["High-Sensitivity C-Reactive Protein (hs-CRP)"] = st.number_input("hs-CRP (mg/L)", 0.0, 600.0, 3.0)
+        a_data["Serum Creatinine"] = st.number_input("Serum Creatinine (umol/L)", 0.0, 10.0, 1.0)
+
+    with col3:
+        a_data["Troponin I"] = st.number_input("Troponin I (ng/mL)", 0.0, 20.0, 1.0)
+        a_data["Mean Corpuscular Volume"] = st.number_input("Mean Corpuscular Volume (fL)", 10.0, 200.0, 90.0)
+        a_data["Mean Corpuscular Hemoglobin"] = st.number_input("Mean Corpuscular Hemoglobin (pg)", 10.0, 70.0, 40.0)
+        a_data["D-Dimer"] = st.number_input("D-Dimer (ug/mL)", 0.0, 20.0, 1.0)
+        a_data["Platelet Count"] = st.number_input("Platelet Count (10*9/L)", 0.0, 800.0, 231.0)
+        a_data["Potassium"] = st.number_input("Potassium (mmol/L)", 0.0, 10.0, 3.0)
+        a_data["Sodium"] = st.number_input("Sodium (mmol/L)", 0.0, 200.0, 135.0)
+        a_data["Chloride"] = st.number_input("Chloride (mmol/L)", 0.0, 200.0, 105.0)
+        a_data["Carbon Dioxide"] = st.number_input("Carbon Dioxide (mmol/L)", 0.0, 50.0, 23.0)
+        a_data["Prothrombin Time"] = st.number_input("Prothrombin Time (seconds)", 0.0, 50.0, 12.0)
+        a_data["Lactate"] = st.number_input("Lactate (mmol/L)", 0.0, 15.0, 3.0)
 
 # =================== Post-hospital Features (B组，仅M2) ===================
 else:
@@ -133,27 +149,41 @@ else:
         b_data["Alanine Aminotransferase (ALT)"] = st.number_input("Alanine Aminotransferase (ALT) (U/L)", 0.0, 1050.0, 40.0)
         b_data["Total Bilirubin"] = st.number_input("Total Bilirubin (umol/L)", 0.0, 500.0, 15.0)
         b_data["Lactate Dehydrogenase (LDH)"] = st.number_input("Lactate Dehydrogenase (LDH) (U/L)", 50.0, 3500.0, 300.0)
-
-
-    # Column 2
-    with col2:
         b_data["Urea"] = st.number_input("Urea (mmol/L)", 0.0, 70.0, 5.0)
         b_data["Uric Acid"] = st.number_input("Uric Acid (umol/L)", 0.0, 1000.0, 263.0)
         b_data["Creatine Kinase (CK)"] = st.number_input("CK (ng/mL)", 0.0, 10000.0, 150.0)
         b_data["Creatine Kinase-MB Isoenzyme"] = st.number_input("Creatine Kinase-MB Isoenzyme (ng/mL)", 0.0, 500.0, 20.0)
+        
+
+    # Column 2
+    with col2:
         b_data["Albumin (First Measurement)"] = st.number_input("Albumin (First Measurement) (g/L)", 10.0, 70.0, 40.0)
         b_data["Length of Stay"] = st.number_input("Length of Stay (days)", 0, 50, 7)
         b_data["High-Sensitivity C-Reactive Protein (hs-CRP)"] = st.number_input("High-Sensitivity C-Reactive Protein (hs-CRP) (mg/L)", 0.0, 500.0, 5.0)
-
-
-    # Column 3
-    with col3:
         b_data["Blood Cholinesterase Test Results"] = st.number_input("Blood Cholinesterase Test Results (U/L)", 0.0, 20.0, 3.0)
         b_data["Albumin (Last Measurement)"] = st.number_input("Albumin (Last Measurement) (g/L)", 10.0, 70.0, 40.0)
         b_data["Weight"] = st.number_input("Weight (Kg)", 2.0, 200.0, 65.0)
         b_data["Diastolic Blood Pressure"] = st.number_input("Diastolic Blood Pressure (mmHg)", 10, 200, 80)
         b_data["Mean Corpuscular Volume"] = st.number_input("Mean Corpuscular Volume (fL)", 60.0, 150.0, 90.0)
         b_data["Vomiting"] = int(st.selectbox("Vomiting", ["No", "Yes"]) == "Yes")
+        b_data["Nausea"] = int(st.selectbox("Nausea", ["No", "Yes"]) == "Yes")
+        b_data["Serum Creatinine"] = st.number_input("Serum Creatinine (umol/L)", 0.0, 10.0, 1.0)
+        
+        
+
+    # Column 3
+    with col3:
+        b_data["Troponin I"] = st.number_input("Troponin I (ng/mL)", 0.0, 20.0, 1.0)
+        b_data["Mean Corpuscular Hemoglobin"] = st.number_input("Mean Corpuscular Hemoglobin (pg)", 10.0, 60.0, 30.0)
+        b_data["D-Dimer"] = st.number_input("D-Dimer (ug/mL)", 0.0, 20.0, 1.0)
+        b_data["Platelet Count"] = st.number_input("Platelet Count (10*9/L)", 0.0, 800.0, 231.0)
+        b_data["Potassium"] = st.number_input("Potassium (mmol/L)", 0.0, 10.0, 3.0)
+        b_data["Sodium"] = st.number_input("Sodium (mmol/L)", 0.0, 200.0, 138.0)
+        b_data["Chloride"] = st.number_input("Chloride (mmol/L)", 0.0, 200.0, 100.0)
+        b_data["Carbon Dioxide"] = st.number_input("Carbon Dioxide (mmol/L)", 0.0, 50.0, 23.0)
+        b_data["Prothrombin Time"] = st.number_input("Prothrombin Time (seconds)", 0.0, 50.0, 12.0)
+        b_data["Lactate"] = st.number_input("Lactate (mmol/L)", 0.0, 15.0, 3.0)
+
 
 
 # =================== Load Models & Data ===================
@@ -174,7 +204,10 @@ x_features_m1 = [
     'Mean Corpuscular Hemoglobin Concentration', 'Alanine Aminotransferase (ALT)',
     'Total Bilirubin', 'Direct Bilirubin', 'Lactate Dehydrogenase (LDH)',
     'Urea', 'Uric Acid', 'Creatine Kinase (CK)', 'Creatine Kinase-MB Isoenzyme',
-    'Homocysteine', 'Albumin (First Measurement)', 'Length of Stay'
+    'Homocysteine', 'Albumin (First Measurement)', 'Length of Stay',
+    'Troponin I', 'Mean Corpuscular Volume', 'Mean Corpuscular Hemoglobin',
+    'D-Dimer', 'Platelet Count', 'Potassium', 'Sodium', 'Chloride',
+    'Carbon Dioxide', 'Prothrombin Time', 'Lactate'
 ]
 
 x_features_m2 = [
@@ -187,7 +220,9 @@ x_features_m2 = [
     'High-Sensitivity C-Reactive Protein (hs-CRP)',
     'Blood Cholinesterase Test Results',
     'Albumin (First Measurement)',
-    'Albumin (Last Measurement)'
+    'Albumin (Last Measurement)', 'Troponin I', 'Mean Corpuscular Hemoglobin',
+    'D-Dimer', 'Platelet Count', 'Potassium', 'Sodium', 'Chloride',
+    'Carbon Dioxide', 'Prothrombin Time', 'Lactate'
 ]
 
 if model_choice == "Model 1 (Mortality Prediction)":
